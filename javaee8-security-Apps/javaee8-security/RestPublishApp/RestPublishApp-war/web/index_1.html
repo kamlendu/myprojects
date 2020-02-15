@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script type="text/javascript" src="/axios-min.js"></script>
+
+
+    </head>
+    <body class="container">
+        <h1>Rest Using Axios</h1>
+        <div id="people"></div>
+        <div id="count"></div>
+        <div id="msg"></div>
+
+        <script src="axios.min.js"></script>
+        <script>
+
+            function addRecord(bookname, authorname, publishername, synopsis)
+            {
+                var bookrecord =
+                        {
+                            "bookName": bookname,
+                            "authorName": authorname,
+                            "publisherName": publishername,
+                            "synopsis": synopsis
+                        }
+
+                // Addition Of Record   
+                axios.post('http://localhost:8080/SampleRest/webresources/rest.bookmaster', bookrecord)
+                        .then(function (response) {
+                            document.getElementById('msg').innerHTML = "Record Added";
+                        })
+                        .catch(function (error) {
+                            document.getElementById('msg').innerHTML = "Could not add the record";
+                        });
+            }
+            // Update the book record
+            function updateRecord(bookid, bookname, authorname, publishername, synopsis)
+            {
+                var bookrecordU =
+                        {
+                            "bookID": bookid,
+                            "bookName": bookname,
+                            "authorName": authorname,
+                            "publisherName": publishername,
+                            "synopsis": synopsis
+                        }
+                axios.put('http://localhost:8080/SampleRest/webresources/rest.bookmaster/' + bookid, bookrecordU)
+                        .then(function (response) {
+                            document.getElementById('msg').innerHTML = "Record Updated";
+                        })
+                        .catch(function (error) {
+                            document.getElementById('msg').innerHTML = "Could not update the record";
+                        });
+            }
+            function deleteRecord(bookid) {
+                //Delete a Record
+                axios.delete('http://localhost:8080/SampleRest/webresources/rest.bookmaster/' + bookid, {
+                })
+                        .then(function (response) {
+                            document.getElementById('msg').innerHTML = "Record Deleted";
+                        })
+                        .catch(function (error) {
+                            document.getElementById('msg').innerHTML = "Could not delete the record";
+                        });
+            }
+            function getAllBooks()
+            {
+                //  // Getting All books
+                axios.get('http://localhost:8080/SampleRest/webresources/rest.bookmaster')
+                        .then(function (response) {
+                            document.getElementById('people').innerHTML = response.data.map(function (book) {
+                                return (
+                                        '<strong>' + book.bookID + "  " + book.bookName + "  " + book.synopsis + '</strong><br/>'
+                                        );
+                            }).join('');
+                        })
+                        .catch(function (err) {
+                            document.getElementById('prople').innerHTML = err.message
+                        });
+            }
+
+            function CountBooks()
+            {
+                //  // Getting All books
+                axios.get('http://localhost:8080/SampleRest/webresources/rest.bookmaster/count')
+                        .then(function (response) {
+                            document.getElementById('count').innerHTML = '<hr/><strong> Total ' + response.data + ' books are in store </strong><br/>'
+
+                        })
+                        .catch(function (err) {
+                            document.getElementById('count').innerHTML = err.message
+                        });
+            }
+
+            // this.deleteRecord('299');
+            //this.addRecord('Two States', 'Chetan Bhagat', 'Rupa and Co', "Three Idiots");
+            //this.updateRecord('300','Three States', 'Chetan Bhagat', 'Rupa and Co', "A Good book");
+            getAllBooks();
+            CountBooks();
+        </script>
+
+
+    </body>
+</html>

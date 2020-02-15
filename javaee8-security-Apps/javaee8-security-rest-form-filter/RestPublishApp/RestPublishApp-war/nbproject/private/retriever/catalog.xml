@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
+    <system systemId="http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" uri="www.oracle.com/webfolder/technetwork/jsc/xml/ns/javaee/web-app_3_1.xsd"/>
+    <system systemId="http://www.oracle.com/webfolder/technetwork/jsc/xml/ns/javaee/web-common_3_1.xsd" uri="www.oracle.com/webfolder/technetwork/jsc/xml/ns/javaee/web-common_3_1.xsd"/>
+    <system systemId="http://www.oracle.com/webfolder/technetwork/jsc/xml/ns/javaee/javaee_7.xsd" uri="www.oracle.com/webfolder/technetwork/jsc/xml/ns/javaee/javaee_7.xsd"/>
+    <system systemId="http://www.oracle.com/webfolder/technetwork/jsc/xml/ns/javaee/jsp_2_3.xsd" uri="www.oracle.com/webfolder/technetwork/jsc/xml/ns/javaee/jsp_2_3.xsd"/>
+    <system systemId="http://www.w3.org/2001/xml.xsd" uri="www.w3.org/2001/xml.xsd"/>
+    <system systemId="http://www.oracle.com/webfolder/technetwork/jsc/xml/ns/javaee/javaee_web_services_client_1_4.xsd" uri="www.oracle.com/webfolder/technetwork/jsc/xml/ns/javaee/javaee_web_services_client_1_4.xsd"/>
+    <system systemId="http://xmlns.jcp.org/xml/ns/javaee/beans_1_1.xsd" uri="www.oracle.com/webfolder/technetwork/jsc/xml/ns/javaee/beans_1_1.xsd"/>
+</catalog>
