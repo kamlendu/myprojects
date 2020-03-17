@@ -1,0 +1,57 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+     >
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <!--<f:phaseListener type="listener.MyListener"/>-->
+       
+        <h:messages style="color:red"/>
+         <h:form>
+            <h:panelGrid columns="2">
+                <h:outputLabel for="cname"  id="lbluser"   value="Customer Name :"/>
+                <h:inputText id="cname"  required="true" requiredMessage="Name cannot be blank"  value="#{customerBean.customerName}">
+                   
+                    <f:ajax event="valueChange" execute="cname" render="msg" listener="#{customerBean.showPrompt()}"/>
+    
+                    <f:converter converterId="myconverter"/>  
+                    <f:validator validatorId="customLengthValidator"/>
+                </h:inputText>
+                
+               <h:outputLabel for="uname" id="lblname" value="User Name :"/>
+               <h:inputText id="uname" validator="#{customerBean.validateLength}" value="#{customerBean.customerUserName}"/>      
+                <h:outputLabel for="pass" id="lblpass" value="Password :"/>
+                <h:inputSecret id="pass" value="#{customerBean.customerPassword}"/>      
+                <h:outputLabel for="age" id="lblage" value="Age :"/>
+                <h:inputText id="age" value="#{customerBean.customerAge}">
+                    <f:validateLongRange minimum="18" maximum="70"/> 
+                </h:inputText>
+                 <h:outputLabel for="rdt" id="lblrdt" value="Joining Date (dd/mm/yyyy) :"/>
+                 <h:inputText id="rdt" value="#{customerBean.regDate}">
+                     <f:convertDateTime  for="rdt" pattern="dd/MM/yyyy"/>
+                 
+                 </h:inputText>   
+                
+               <h:outputLabel for="cemail" id="lblemail" value="User Email :"/>
+               <h:inputText id="cemail"  value="#{customerBean.customerEmail}">
+                        <f:validateRegex pattern="[a-z]+@.+\..+"/>
+               </h:inputText>
+                   
+               
+                
+                <h:commandButton id="sub"  value="Submit" action="#{customerBean.showData()}">
+              
+                </h:commandButton>
+                <h:commandButton id="res" value="Reset"/>
+                
+            </h:panelGrid>
+         </h:form>
+        <h2>      
+            <h:outputText id="msg" value="#{customerBean.message}"/></h2>
+    </h:body>
+</html>
+
