@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <!-- INTERFACE -->
+    <cc:interface>
+        <cc:actionSource name="loginButton" targets="form:loginButton"/>
+        <cc:attribute name="formheader" default="Login"/>
+        <cc:attribute name="userprompt"/>
+        <cc:attribute name="passwordprompt"/>
+        <cc:attribute name="submitval"/>
+        <cc:attribute name="resetval"/>
+        <cc:attribute name="loginaction" method-signature="java.lang.String action()"/>
+        <cc:attribute name="managedbean"/> 
+    </cc:interface>
+
+    <!-- IMPLEMENTATION -->
+    <cc:implementation>
+        <h:form>
+            <div>#{cc.attrs.formheader}</div>
+            <h:panelGrid columns="2" border="1">
+                 #{cc.attrs.userprompt}
+                <h:inputText id="name" value="#{cc.attrs.managedbean.username}"/>
+                 #{cc.attrs.passwordprompt}
+                <h:inputSecret id="pass" value="#{cc.attrs.managedbean.password}"/> 
+                
+                <h:commandButton id="loginButton" value="#{cc.attrs.submitval}" action="#{cc.attrs.loginaction}"/>
+                <h:commandButton id="res" value="#{cc.attrs.resetval}" />
+
+            </h:panelGrid>
+            
+            
+        </h:form>
+        
+        
+        
+    </cc:implementation>
+</html>
