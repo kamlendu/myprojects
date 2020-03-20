@@ -1,0 +1,46 @@
+ 
+Steps of Certificate Creation
+
+default passsword for keystore is:   changeit
+
+1) Go to config directory of Payara
+
+cd /usr/local/payara5.193/glassfish/domains/domain1/config
+
+2) Take the backup of Keystore.jks
+
+cp keystore.jks keystore-backup.jks
+
+3) Delete the existing public private key pair which is stored as alias s1as
+
+keytool -delete -alias s1as -keystore keystore.jks
+
+4) Creating Public Private Key Pair with alias s1as
+
+ keytool -genkey -keyalg RSA -keysize 1024 -alias s1as -keystore keystore.jks -validity 365
+
+5) create a public certificate file with .cer extention
+
+keytool -export -alias s1as -file kamlendu.cer -keystore keystore.jks
+
+6) Put the certificate in a trusted keystore i.e cacerts.jks in payara
+
+keytool -import -alias kamlendu.com -file kamlendu.cer -keystore cacerts.jks
+
+
+
+If you want to extract public and private key pair files in .pem format we can use the following commands. 
+
+1) convert the tradition keystore keystore.jks into PKCS (Public Key Cryptographic Standards) bases keystore
+
+keytool -importkeystore -srckeystore keystore.jks -destkeystore mykeystore.p12 -srcstoretype jks -deststoretype pkcs12
+
+2) Extract private key as .pem file
+openssl pkcs12 -in mykeystore.p12 -out serverprivatekey.pem
+
+3) Extract Public key as .pem file
+openssl pkcs12 -in mykeystore.p12 -out serverprivatekey.pem
+
+
+
+
