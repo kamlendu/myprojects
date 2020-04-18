@@ -1,0 +1,30 @@
+Using JWT in micro profile applications 
+
+MicroProfile JWT establishes that tokens should be signed by using RSASSA-PKCS-v1_5 signature with SHA-256 hash algorithm.
+The general idea behind this is to generate a private key that will be used on token provider, subsequently the clients only need the public key to verify the signature. One of the "simple" ways to do this is by generating an SSH keypair using OpenSSL
+
+First, it is necessary to generate a base key to be signed:
+
+openssl genrsa -out baseKey.pem
+
+
+From the base key generate the PKCS#8 private key:
+
+openssl pkcs8 -topk8 -inform PEM -in baseKey.pem -out privateKey.pem -nocrypt
+
+
+Using the private key you could generate a public (and distributable) key
+
+openssl rsa -in baseKey.pem -pubout -outform PEM -out publicKey.pem
+
+
+Finally, some crypto libraries like bouncy castle only accept traditional RSA keys, hence it is safe to convert it using also openssl:
+
+openssl rsa -in privateKey.pem -out myprivateKey.pem
+
+jwt by pkcs8 private key
+
+eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJodHRwczovL3NlcnZlci5leGFtcGxlLmNvbSIsImF1ZCI6InRhcmdldFNlcnZpY2UiLCJqdGkiOiIyYmMxNDY1Ny0yOWI5LTRkNTEtYmRmYy1jZjJjNzM1NzUyYWUiLCJleHAiOjE1ODU1NjAzNjQsImlhdCI6MTU4NTU2MDMzNCwic3ViIjoia2FtYWwiLCJ1cG4iOiJrYW1hbCIsInByZWZlcnJlZF91c2VybmFtZSI6bnVsbCwiY3VzdG9tLXZhbHVlIjoia2FtYWwgc3BlY2lmaWMgdmFsdWUiLCJncm91cHMiOlsiYWRtaW4iLCJzdXBlcnZpc29yIl19.il85HNic2dwjY5ktxR-U-4jc736nNYS8shdGRb6Ja0wWZMwm_Y16V5zhFntWrAJf8ADpS0CuMwcf6LNc3D2xHq5vDsMtVyAH_UdPSNsBVB_SCGEtffK76YfIl5IJQM2qXdBa8zyhQjyB9p_lPKuuw3FxsORqQE2zA1QgHdNjVACvH6jfgGgo-17_tkY69icoPoMIt2JHbfuZgLjj-U7bS2ZFQOia88qunzAT64xldjYl-QNvAfZGdcq-ZTMeV-514ZaabSTpIhi7cKlMgt_b4XeDa6xVF1G0dXU-ibp144EcfKYzWNPMug4ldE6UmJEq7lF54xIYaIggeoqdgiQvew
+
+
+
